@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Administración - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Perfil administrativo</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_universidad' %}" class="boton boton-primario">Registrar universidad</a>
+        <a href="{% url 'listar_universidades' %}" class="boton boton-secundario">Listar universidades</a>
+        <a href="{% url 'listar_campus' %}" class="boton boton-secundario">Listar campus</a>
+        <a href="{% url 'listar_carreras' %}" class="boton boton-secundario">Listar carreras</a>
+    </div>
+</div>
+
+<div class="tarjeta">
+    <h2>Universidades registradas</h2>
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Abreviatura</th><th>Código SNIESE</th></tr>
+        </thead>
+        <tbody>
+            {% for universidad in universidades %}
+            <tr>
+                <td>{{ universidad.nombre }}</td>
+                <td>{{ universidad.abreviatura }}</td>
+                <td>{{ universidad.codigo_sniese }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

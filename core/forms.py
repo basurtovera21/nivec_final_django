@@ -5,7 +5,7 @@ from core.models import (Universidad, Campus, Carrera, UsuarioDeSistema, PerfilD
 #Carga de MTN 
 class DocumentoMTN(forms.Form):
     documento_mtn = forms.FileField(
-        label = "Documento MTN (.xlsx)",
+        label = "MTN (.xlsx)",
         help_text = "Registro de Matriz de Tercer Nivel.",
     )
 
@@ -13,7 +13,7 @@ class DocumentoMTN(forms.Form):
         documento_mtn = self.cleaned_data.get("documento_mtn")
         if documento_mtn:
             if not documento_mtn.name.endswith(".xlsx"):
-                raise forms.ValidationError("Registro no válido.")
+                raise forms.ValidationError("Registro de formato no válido.")
             if documento_mtn.size > 10 * 1024 * 1024: #10MB
                 raise forms.ValidationError("El documento supera el límite permitido (10MB).")
         return documento_mtn

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Unidades curriculares - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Unidades curriculares</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_unidades_curriculares' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Código de unidad</th><th>Nombre</th><th>Malla curricular</th><th>Tipo de componente</th><th>Horas totales</th><th>Criterio de aprobación</th></tr>
+        </thead>
+        <tbody>
+            {% for unidad in unidades %}
+            <tr>
+                <td>{{ unidad.codigo_de_unidad }}</td>
+                <td>{{ unidad.nombre }}</td>
+                <td>{{ unidad.malla_curricular }}</td>
+                <td>{{ unidad.tipo_de_componente }}</td>
+                <td>{{ unidad.horas_totales }}</td>
+                <td>{{ unidad.criterio_de_aprobacion }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Perfil no registrado - NIVEC{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta" style="text-align:center; padding: 24px;">
+    <h2 style="border:none; font-size: 18px;">PERFIL NO REGISTRADO</h2>
+    
+    <p style="margin: 20px 0; color: #86868b;">
+        El correo no tiene un perfil configurado.
+    </p>
+    
+    <a href="{% url 'cerrar_sesion' %}" class="boton boton-secundario">Cerrar sesión</a>
+</div>
+{% endblock %}

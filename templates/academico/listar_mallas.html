@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Mallas curriculares - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Mallas curriculares</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_malla_curricular' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Carrera</th><th>Versión de malla</th><th>Modalidad</th><th>Estado</th><th>Total de horas de nivelación</th></tr>
+        </thead>
+        <tbody>
+            {% for malla in mallas %}
+            <tr>
+                <td>{{ malla.nombre }}</td>
+                <td>{{ malla.carrera }}</td>
+                <td>{{ malla.version_de_malla }}</td>
+                <td>{{ malla.modalidad }}</td>
+                <td>{{ malla.estado }}</td>
+                <td>{{ malla.total_horas_nivelacion }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

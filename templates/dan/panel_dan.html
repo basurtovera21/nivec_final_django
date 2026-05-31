@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block titulo %}DAN - NIVEC{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Dirección de admisión y nivelación</h2>
+    <div class="acciones">
+        <a href="{% url 'procesar_mtn' %}" class="boton boton-primario">Procesar matriz de tercer nivel (MTN)</a>
+        <a href="{% url 'registrar_periodo_de_nivelacion' %}" class="boton boton-secundario">Registrar periodo de nivelación</a>
+        <a href="{% url 'listar_estudiantes' %}" class="boton boton-secundario">Listar estudiantes</a>
+    </div>
+</div>
+
+<div class="tarjeta">
+    <h2>Periodos de nivelación</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Periodo</th><th>Año</th><th>Modalidad</th>
+                <th>Fecha de inicio</th><th>Fecha de fin</th><th>Estado</th><th>Informe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for periodo in periodos_de_nivelacion %}
+            <tr>
+                <td>{{ periodo.periodo }}</td>
+                <td>{{ periodo.anio }}</td>
+                <td>{{ periodo.modalidad }}</td>
+                <td>{{ periodo.fecha_inicio }}</td>
+                <td>{{ periodo.fecha_fin }}</td>
+                <td>{{ periodo.estado }}</td>
+                <td>
+                    <a href="{% url 'crear_informe_general' periodo.id %}?formato=excel" class="boton boton-secundario" style="padding: 6px 12px; font-size: 12px;">Excel</a>
+                    <a href="{% url 'crear_informe_general' periodo.id %}?formato=txt" class="boton boton-secundario" style="padding: 6px 12px; font-size: 12px;">TXT</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" style="text-align:center; color: #86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="tarjeta">
+    <h2>Consolidados académicos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Periodo</th><th>Fecha de corte</th><th>Registros totales</th>
+                <th>Registros válidos</th><th> Registros observados</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consolidado in consolidados_academicos %}
+            <tr>
+                <td>{{ consolidado.periodo_academico.periodo }}</td>
+                <td>{{ consolidado.fecha_de_corte }}</td>
+                <td>{{ consolidado.registros_totales }}</td>
+                <td>{{ consolidado.registros_validos }}</td>
+                <td>{{ consolidado.registros_observados }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center; color: #86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}Evaluaciones académicas - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Evaluaciones académicas</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_evaluacion' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Estudiante</th><th>Unidad curricular</th><th>Calificación parcial 1</th><th>Calificación parcial 2</th><th>Calificación final</th><th>Porcentaje de asistencia</th><th>Estado de aprobación</th></tr>
+        </thead>
+        <tbody>
+            {% for evaluacion in evaluaciones_academicas %}
+            <tr>
+                <td>{{ evaluacion.estudiante.usuario_de_sistema.nombres }} {{ evaluacion.estudiante.usuario_de_sistema.apellidos }}</td>
+                <td>{{ evaluacion.unidad_curricular }}</td>
+                <td>{{ evaluacion.calificacion_parcial_1 }}</td>
+                <td>{{ evaluacion.calificacion_parcial_2 }}</td>
+                <td>{{ evaluacion.nota_final }}</td>
+                <td>{{ evaluacion.porcentaje_asistencia }}%</td>
+                <td>{{ evaluacion.estado_de_aprobacion }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -178,6 +178,7 @@ class PerfilAdministrativo(models.Model):
     usuario_de_sistema = models.OneToOneField(UsuarioDeSistema, on_delete = models.CASCADE, related_name = "perfil_administrativo")
     identificador_administrativo = models.CharField(max_length = 50, unique = True)
     perfil_administrativo = models.CharField(max_length = 100, choices = cambiar_enum_a_choices(PerfilAdministrativo))
+    db_table = "core_perfiladministrativomodel"
     
     class Meta:
         verbose_name = "Perfil administrativo"

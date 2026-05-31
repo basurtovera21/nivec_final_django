@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Procesar MTN - NIVEC{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta" style="max-width: 500px; margin: 60px auto;">
+    <h2>{{ titulo }}</h2>
+    
+    <p style="color: #86868b; margin-top: 12px; margin-bottom: 20px; line-height: 1.5;">
+        El formato debe ser <strong>.xlsx</strong> con las divisiones:<br>
+        <span style="font-size: 13px; font-family: monospace; display: block; margin-top: 6px;">
+            identificacion, nombres, apellidos, correo_institucional, carrera, campus, jornada, registro_de_cupo
+        </span>
+    </p>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for campo in formulario %}
+        <div class="campo">
+            <label>{{ campo.label }}</label>
+            {{ campo }}
+            {% if campo.help_text %}<span class="ayuda">{{ campo.help_text }}</span>{% endif %}
+            {% for error in campo.errors %}<span class="error-campo">{{ error }}</span>{% endfor %}
+        </div>
+        {% endfor %}
+        
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button type="submit" class="boton boton-primario">Procesar</button>
+            <a href="{% url 'panel_dan' %}" class="boton boton-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

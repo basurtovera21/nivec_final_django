@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}Universidades - NIVEC{% endblock %}
+
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Universidades</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_universidad' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Abreviatura</th><th>Código SNIESE</th><th>Dirección de matriz</th></tr>
+        </thead>
+        <tbody>
+            {% for universidad in universidades %}
+            <tr>
+                <td>{{ universidad.nombre }}</td>
+                <td>{{ universidad.abreviatura }}</td>
+                <td>{{ universidad.codigo_sniese }}</td>
+                <td>{{ universidad.direccion_matriz }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" style="text-align:center; color:#888;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

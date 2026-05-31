@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}Carreras - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Carreras</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_carrera' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Campus</th><th>Modalidad</th><th>Vigencia SNIESE</th><th>Activa</th></tr>
+        </thead>
+        <tbody>
+            {% for carrera in carreras %}
+            <tr>
+                <td>{{ carrera.nombre }}</td>
+                <td>{{ carrera.campus }}</td>
+                <td>{{ carrera.modalidad }}</td>
+                <td>{{ carrera.vigencia_sniese }}</td>
+                <td>{{ carrera.esta_activa|yesno:"Sí,No" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Estudiantes - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Estudiantes</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_estudiante' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Nombres</th><th>Apellidos</th><th>Identificación</th><th>Carrera registrada</th><th>Jornada</th><th>Estado de matrícula</th></tr>
+        </thead>
+        <tbody>
+            {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.usuario_de_sistema.nombres }}</td>
+                <td>{{ estudiante.usuario_de_sistema.apellidos }}</td>
+                <td>{{ estudiante.usuario_de_sistema.identificacion }}</td>
+                <td>{{ estudiante.carrera_registrada }}</td>
+                <td>{{ estudiante.jornada }}</td>
+                <td>{{ estudiante.estado_de_matricula }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

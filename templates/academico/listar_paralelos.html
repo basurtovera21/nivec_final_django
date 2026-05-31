@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block titulo %}Paralelos - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Paralelos</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_paralelo' %}" class="boton boton-primario">Registrar</a>
+        <a href="{% url 'crear_horario' %}" class="boton boton-secundario">Registrar horario</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Nombre</th><th>Periodo de nivelación</th><th>Unidad curricular</th><th>Docente responsable</th><th>Jornada</th><th>Capacidad máxima</th></tr>
+        </thead>
+        <tbody>
+            {% for paralelo in paralelos %}
+            <tr>
+                <td>{{ paralelo.nombre }}</td>
+                <td>{{ paralelo.periodo_de_nivelacion }}</td>
+                <td>{{ paralelo.unidad_curricular }}</td>
+                <td>{{ paralelo.docente_responsable|default:"No registrado" }}</td>
+                <td>{{ paralelo.jornada }}</td>
+                <td>{{ paralelo.capacidad_maxima }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

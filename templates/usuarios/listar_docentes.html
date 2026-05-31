@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Docentes - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Docentes</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_docente' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Nombres</th><th>Apellidos</th><th>Identificación</th><th>Tipo de vinculación</th><th>Tiempo de dedicación</th><th>Estado de vinculación</th></tr>
+        </thead>
+        <tbody>
+            {% for docente in docentes %}
+            <tr>
+                <td>{{ docente.usuario_de_sistema.nombres }}</td>
+                <td>{{ docente.usuario_de_sistema.apellidos }}</td>
+                <td>{{ docente.usuario_de_sistema.identificacion }}</td>
+                <td>{{ docente.tipo_de_vinculacion }}</td>
+                <td>{{ docente.tiempo_de_dedicacion }}</td>
+                <td>{{ docente.estado_de_vinculacion }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

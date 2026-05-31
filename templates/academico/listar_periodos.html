@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Periodos de nivelación - NIVEC{% endblock %}
+{% block contenido %}
+<div class="tarjeta">
+    <h2>Periodos de nivelación</h2>
+    <div class="acciones">
+        <a href="{% url 'registrar_periodo_de_nivelacion' %}" class="boton boton-primario">Registrar</a>
+    </div>
+    <table>
+        <thead>
+            <tr><th>Periodo</th><th>Año</th><th>Modalidad</th><th>Fecha de inicio</th><th>Fecha de fin</th><th>Estado</th></tr>
+        </thead>
+        <tbody>
+            {% for periodo in periodos %}
+            <tr>
+                <td>{{ periodo.periodo }}</td>
+                <td>{{ periodo.anio }}</td>
+                <td>{{ periodo.modalidad }}</td>
+                <td>{{ periodo.fecha_inicio }}</td>
+                <td>{{ periodo.fecha_fin }}</td>
+                <td>{{ periodo.estado }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center; color:#86868b;">No existen registros</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

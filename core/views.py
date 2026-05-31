@@ -478,7 +478,7 @@ def procesar_mtn(request):
 
     return render(request, "dan/cargar_mtn.html", {
         "formulario": formulario_documento_mtn,
-        "titulo": "Procesar Matriz de Tercer Nivel (MTN)",
+        "titulo": "Procesar matriz de tercer nivel (MTN)",
     })
 
 

@@ -13,11 +13,5 @@ class Carrera:
         self.vigencia_sniese = vigencia_sniese
         
 
-    def esta_activa(self): #Retorna bool
-        #True si la fecha actual no supera la vigencia_sniese.
-        fecha_actual = date.today()
-        
-        if fecha_actual <= self.vigencia_sniese:
-            return True
-        else:
-            return False
+    def esta_activa(self) -> bool:
+        return date.today() <= self.vigencia_sniese

@@ -1,9 +1,9 @@
 from datetime import date
 
 #Enums
-from clases.enums.formato_de_exportacion import FormatoDeExportacion
 from clases.enums.tipo_de_informe import TipoDeInforme
 from clases.enums.estado_de_informe import EstadoDeInforme
+from clases.enums.estado_de_periodo import EstadoDePeriodo
 
 #Interface
 from clases.i_informe_institucional import IInformeInstitucional
@@ -23,26 +23,24 @@ class InformeGeneral(IInformeInstitucional): #Interfaz
 
 
     def emitir_informe_de_nivelacion(self):
-        from clases.enums.estado_de_periodo import EstadoDePeriodo
-        from clases.enums.estado_de_informe import EstadoDeInforme
-
         if self.periodo_academico._estado != EstadoDePeriodo.CERRADO:
-            print(f"[Informe general] No se puede emitir el informe: El periodo no ha sido cerrado.")
+            print(f"[Informe general] No se ha podido emitir el informe de nivelación: El periodo no ha sido cerrado.")
             return
         
         total_matriculados = 0
         for cohorte in self._cohortes:
             total_matriculados += cohorte.calcular_total_matriculados()
             
-        print(f"[Informe general] Emitiendo informe: {self.codigo_de_informe}")
+        print(f"[Informe general] Informe de nivelación: {self.codigo_de_informe}")
         print(f"Periodo académico: {self.periodo_academico.periodo}")
         print(f"Tipo de informe: {self.tipo_de_informe.value}")
-        print(f"Total matriculados consolidados: {total_matriculados}")
+        print(f"Total de matriculados consolidados: {total_matriculados}")
 
         self._fecha_de_emision  = date.today()
         self._estado_de_informe = EstadoDeInforme.REVISION
         print(f"Fecha de emisión: {self._fecha_de_emision}")
         print(f"Estado actualizado: {self._estado_de_informe.value}")
+       
         
     def exportar_consolidado_de_estudiantes(self, formato_de_exportacion):
         from clases.enums.formato_de_exportacion import FormatoDeExportacion

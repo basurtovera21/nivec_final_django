@@ -7,5 +7,5 @@ class Campus:
         self.infraestructura_compartida = infraestructura_compartida
         
 
-    def verificar_disponibilidad_de_infraestructura(self): #Retorna bool
-        pass
+    def verificar_disponibilidad_de_infraestructura(self):
+        return not self.infraestructura_compartida

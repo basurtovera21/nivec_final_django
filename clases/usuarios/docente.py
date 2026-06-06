@@ -33,15 +33,27 @@ class Docente(UsuarioAcademico):
         self._especialidades = [] #Áreas de conocimiento
         self._disponibilidad_semanal = [] #Bloque horario
         
+        
     def iniciar_sesion(self): #Sobreescritura
         if self._estado_de_vinculacion.value == "Inactivo":
-            print(f"[Docente] Acceso denegado: {self.nombres} {self.apellidos} (vinculación inactiva).")
+            print(f"[Docente] Inicio de sesión fallido: {self.nombres} {self.apellidos} (estado de vinculación inactiva).")
+
         else:
-            print(f"[Docente] Sesión iniciada: {self.nombres} {self.apellidos} (carga actual de {self._carga_horaria_actual} horas)")
-        
+            print(f"[Docente] Sesión iniciada: {self.nombres} {self.apellidos} (carga horaria actual de {self._carga_horaria_actual} horas)")
+         
+         
     def visualizar_carga_academica(self):
-        pass   
-    def registrar_calificacion_parcial(self): #self, parcial, unidad_curricular, paralelo, estudiante, nota
-        pass
-    def registrar_asistencia_de_estudiante(self): #self, fecha, paralelo, lista_asistencia
-        pass
+        print(f"Docente: {self.nombres} {self.apellidos}")
+        print(f"Carga horaria actual: {self._carga_horaria_actual} horas")
+        print(f"Carga horaria máxima: {self.carga_horaria_maxima} horas")
+        print(f"Horas disponibles: {self.carga_horaria_maxima - self._carga_horaria_actual} horas")
+        if self._especialidades:
+            print("Especialidades:", ", ".join(self._especialidades))
+            
+        else:
+            print("Especialidades: No existe registro.")
+      
+            
+    def inhabilitar_perfil(self):
+        self._estado_de_vinculacion = EstadoDeVinculacion.INACTIVO
+        print(f"El perfil ha sido inhabilitado.")

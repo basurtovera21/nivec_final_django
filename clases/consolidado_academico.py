@@ -1,6 +1,5 @@
 from datetime import date
 
-from clases.usuarios.estudiante import Estudiante
 from clases.periodo_de_nivelacion import PeriodoDeNivelacion
 
 
@@ -15,7 +14,9 @@ class ConsolidadoAcademico:
         self._registros_de_entrada = [] #Lista de diccionarios o filas del archivo
         
 
-    def registrar_consolidado_academico(self): #self, ruta_archivo: str
-        pass
-    def verificar_aceptacion_cupo(self): # self, identificacion: str Retorna bool 
-        pass
+    def verificar_aceptacion_cupo(self, identificacion: str):
+        #Verificación en los registros válidos de la MTN
+        for registro in self._registros_de_entrada:
+            if registro.get("identificacion") == identificacion:
+                return True
+        return False

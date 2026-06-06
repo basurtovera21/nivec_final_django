@@ -32,17 +32,45 @@ class Estudiante(UsuarioAcademico):
         self.campus_registrado = campus_registrado
         self._estado_de_matricula = estado_de_matricula #Instancia
      
+     
     def iniciar_sesion(self): #Sobreescritura
         if self._estado_de_matricula.value in ("Retirado", "Anulado"):
-            print(f"[Estudiante] Acceso denegado: {self.nombres} {self.apellidos} (matrícula {self._estado_de_matricula.value.lower()}).")
+            print(f"[Estudiante] Inicio de sesión fallido: {self.nombres} {self.apellidos} (estado de matrícula {self._estado_de_matricula.value.lower()}).")
+            
         else:
             print(f"[Estudiante] Sesión iniciada: {self.nombres} {self.apellidos} ({self._estado_de_matricula.value})")
     
-    def formalizar_matricula(self): #Aspirante de la MTN en Estudiante
-        pass
+    
+    def formalizar_matricula(self): #ASPIRANTE a MATRICULADO
+        if self._estado_de_matricula == EstadoDeMatricula.ASPIRANTE:
+            self._estado_de_matricula = EstadoDeMatricula.MATRICULADO
+            print(f"La matrícula ha sido formalizada: {self.nombres} {self.apellidos}")
+            
+        else:
+            print(f"No es posible formalizar la matrícula (estado {self._estado_de_matricula.value.lower()})")
+            
+            
+    def anular_matricula(self):
+        self._estado_de_matricula = EstadoDeMatricula.ANULADO
+        print(f"La matrícula ha sido anulada: {self.nombres} {self.apellidos}")
+            
+            
     def obtener_carrera(self):
         return self._carrera_registrada
-    def obtener_registro_de_unidades_curriculares(self):
-        pass
-    def solicitar_retiro(self): #self, motivo
-        pass
+    
+    
+    def solicitar_retiro(self): #A RETIRADO si está MATRICULADO
+        if self._estado_de_matricula == EstadoDeMatricula.MATRICULADO:
+            self._estado_de_matricula = EstadoDeMatricula.RETIRADO
+            print(f"El retiro ha sido registrado: {self.nombres} {self.apellidos}")
+            
+        else:
+            print(f"No es posible solicitar retiro (estado {self._estado_de_matricula.value})")
+    
+    
+    def aprobar_retiro(self):
+        if self._estado_de_matricula == EstadoDeMatricula.MATRICULADO:
+            self._estado_de_matricula = EstadoDeMatricula.RETIRADO
+            print(f"El retiro ha sido aprobado: {self.nombres} {self.apellidos}")
+        else:
+            print(f"No es posible aprobar el retiro (estado {self._estado_de_matricula.value})")

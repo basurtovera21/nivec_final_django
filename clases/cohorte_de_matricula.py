@@ -21,7 +21,34 @@ class CohorteDeMatricula:
         self._total_exonerados = 0
         
 
-    def registrar_estudiante_matriculado(self): #self, estudiante: Estudiante
-        pass
+    def registrar_estudiante_matriculado(self, estudiante: Estudiante):
+        if self._estado_de_cohorte != EstadoDeCohorte.ABIERTA:
+            print(f"[Cohorte de matrícula] La cohorte de matrícula ha sido cerrada previamente: {self.codigo_de_registro}")
+            return
+
+        if date.today() > self.fecha_de_cierre:
+            print(f"[Cohorte de matrícula] La fecha de cierre ha sido superada: {self.fecha_de_cierre}")
+            return
+
+        if estudiante in self._estudiantes_matriculados:
+            print(f"[Cohorte de matrícula] El estudiante ya ha sido registrado previamente: {estudiante.nombres} {estudiante.apellidos}")
+            return
+
+        self._estudiantes_matriculados.append(estudiante)
+        self._actualizar_contador(estudiante.registro_de_cupo)
+        print(f"[Cohorte de matrícula] El estudiante ha sido registrado: {estudiante.nombres} {estudiante.apellidos}")
+        
+        
+    def _actualizar_contador(self, registro_de_cupo: RegistroDeCupo):
+        if registro_de_cupo == RegistroDeCupo.REGULAR:
+            self._total_primera_matricula += 1
+
+        elif registro_de_cupo == RegistroDeCupo.SEGUNDA_MATRICULA:
+            self._total_segunda_matricula += 1
+
+        elif registro_de_cupo == RegistroDeCupo.EXONERACION:
+            self._total_exonerados += 1    
+            
+            
     def calcular_total_matriculados(self): #Retorna int
         return (self._total_primera_matricula + self._total_segunda_matricula + self._total_exonerados)

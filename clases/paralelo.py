@@ -25,10 +25,34 @@ class Paralelo:
             return True
         else:
             return False
+        
             
-    def vincular_estudiante(self): #self, estudiante: Estudiante
-        pass  
-    def desvincular_estudiante(self): #self, estudiante: Estudiante
-        pass
-    def vincular_docente(self): #self, docente: Docente
-        pass
+    def vincular_estudiante(self, estudiante: Estudiante):
+        if not self.tiene_cupo_disponible():
+            print(f"[Paralelo] No existen cupos disponibles: {self.nombre}")
+            return
+
+        if estudiante in self._estudiantes_matriculados:
+            print(f"[Paralelo] El estudiante ya ha sido registrado previamente: {estudiante.nombres} {estudiante.apellidos}")
+            return
+
+        self._estudiantes_matriculados.append(estudiante)
+        print(f"[Paralelo] El estudiante ha sido registrado: {estudiante.nombres} {estudiante.apellidos}")
+        
+        
+    def desvincular_estudiante(self, estudiante: Estudiante):
+        if estudiante not in self._estudiantes_matriculados:
+            print(f"[Paralelo] El estudiante no ha sido encontrado: {estudiante.nombres} {estudiante.apellidos}")
+            return
+
+        self._estudiantes_matriculados.remove(estudiante)
+        print(f"[Paralelo] El estudiante ha sido removido: {estudiante.nombres} {estudiante.apellidos}")
+        
+        
+    def vincular_docente(self, docente: Docente):
+        if self._docente_responsable is not None:
+            print(f"[Paralelo] El paralelo ya tiene un docente vinculado: {self._docente_responsable.nombres} {self._docente_responsable.apellidos}")
+            return
+
+        self._docente_responsable = docente
+        print(f"[Paralelo] El docente ha sido vinculado: {docente.nombres} {docente.apellidos}")

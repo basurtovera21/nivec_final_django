@@ -23,18 +23,6 @@ class CoordinadorDAN(UsuarioAdministrativo):
             )
         self.identificador_coordinador_dan = identificador_coordinador_dan
         
+        
     def iniciar_sesion(self): #Sobreescritura
-        print(f"[Coordinador DAN] Sesión iniciada: {self.nombres} {self.apellidos} (ID DAN: {self.identificador_coordinador_dan})")
-      
-    def procesar_matriz_mtn(self): #Matriz de tercer nivel
-        pass
-    def registrar_consolidado_de_estudiantes(self): #Carga inicial de aspirantes aceptados
-        pass
-    def conformar_cohorte_de_matricula(self): #Cohorte por periodo académico
-        pass
-    def iniciar_consolidacion_institucional(self): #Bloqueo solicitudes de retiro
-        pass
-    def validar_resultados_institucionales(self): #Verificación de resultados
-        pass
-    def cerrar_consolidacion_institucional(self): #Cierre de periodo
-        pass
+        print(f"[Coordinador DAN] Sesión iniciada: {self.nombres} {self.apellidos} ({self.identificador_coordinador_dan})")

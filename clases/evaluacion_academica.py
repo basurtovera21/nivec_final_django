@@ -20,8 +20,6 @@ class EvaluacionAcademica:
         
 
     def registrar_calificacion(self, *args): #Sobrecarga
-        from clases.enums.estado_de_aprobacion import EstadoDeAprobacion
-
         if self._estado_de_aprobacion != EstadoDeAprobacion.PENDIENTE:
             print(f"[Evaluación académica] No se ha podido registrar (estado {self._estado_de_aprobacion.value}).")
             return
@@ -41,6 +39,7 @@ class EvaluacionAcademica:
         else:
             print("[Evaluación académica] Registros no válidos para registro.")
             
+            
     def _definir_en_parcial(self, parcial: int, nota: float):
         #Validar rango y definir la nota en el parcial definido
         if not (0.0 <= nota <= 10.0):
@@ -54,26 +53,30 @@ class EvaluacionAcademica:
         elif parcial == 2:
             self._calificacion_parcial_2 = nota
             print(f"[Evaluación académica] Nota parcial 2 registrada: {nota}")
+            
         else:
             print(f"[Evaluación académica] Número de parcial no válido: {parcial}")
+      
             
     def calcular_nota_final(self):
         #Promedio de los dos parciales. Actualiza _nota_final.
         if self._calificacion_parcial_1 == 0.0 or self._calificacion_parcial_2 == 0.0:
-            print("[Evaluación Académica] No se ha registrado la calificación de ambos parciales.")
+            print("[Evaluación académica] No se ha registrado la calificación de ambos parciales.")
             return 0.0
         
         self._nota_final = round((self._calificacion_parcial_1 + self._calificacion_parcial_2)/2, 2)
         return self._nota_final
 
+
     def registrar_asistencia_final(self, porcentaje: float):
         #Registro del porcentaje de asistencia. Valor entre 0.0 y 100.0.
         if not (0.0 <= porcentaje <= 100.0):
-            print(f"[Evaluación académica] Porcentaje registrado fuera de rango: {porcentaje}")
+            print(f"[Evaluación académica] El porcentaje registrado está fuera de rango: {porcentaje}")
             return
         
         self._porcentaje_asistencia = porcentaje
         print(f"[EvaluacionAcademica] El porcentaje de asistencia ha sido registrado: {porcentaje}%")
+
 
     def verificar_aprobacion(self):
         #Determinación del estado final por criterios normativos en orden de prioridad. Actualiza _estado_de_aprobacion y retorna el estado resultante
@@ -96,3 +99,16 @@ class EvaluacionAcademica:
 
         print(f"[Evaluacion académica] Estado final: {self._estado_de_aprobacion.value}")
         return self._estado_de_aprobacion
+    
+    
+    def obtener_resumen_de_evaluacion(self):
+        return {
+            "Estudiante": f"{self.estudiante.nombres} {self.estudiante.apellidos}",
+            "Unidad_curricular": self.unidad_curricular.nombre,
+            "Calificación parcial 1": self._calificacion_parcial_1,
+            "Calificación parcial 2": self._calificacion_parcial_2,
+            "Nota final": self._nota_final,
+            "Porcentaje de asistencia": self._porcentaje_asistencia,
+            "Estado de aprobación": self._estado_de_aprobacion.value,
+            "Observación": self._observacion,
+        }

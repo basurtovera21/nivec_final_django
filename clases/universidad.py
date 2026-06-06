@@ -7,5 +7,11 @@ class Universidad:
         self.identificador_visual = identificador_visual #(ruta de archivo)
         
 
-    def recuperar_informacion_institucional(self): #Retorna dict
-        pass
+    def recuperar_informacion_institucional(self):
+        return {
+            "nombre": self.nombre,
+            "abreviatura": self.abreviatura,
+            "codigo_sniese": self.codigo_sniese,
+            "direccion_matriz": self.direccion_matriz,
+            "identificador_visual": self.identificador_visual,
+        }

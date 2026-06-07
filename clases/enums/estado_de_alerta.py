@@ -1,3 +1,4 @@
+#MonitorNormativo
 from enum import Enum
 
 class EstadoDeAlerta(Enum):

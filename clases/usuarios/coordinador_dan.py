@@ -25,4 +25,4 @@ class CoordinadorDAN(UsuarioAdministrativo):
         
         
     def iniciar_sesion(self): #Sobreescritura
-        print(f"[Coordinador DAN] Sesión iniciada: {self.nombres} {self.apellidos} ({self.identificador_coordinador_dan})")
+        return True

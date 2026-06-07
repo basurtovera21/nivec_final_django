@@ -2,7 +2,7 @@
 from clases.enums.tipo_de_componente import TipoDeComponente
 
 #Interfaz
-from clases.i_unidad_evaluable import IUnidadEvaluable
+from clases.interfaces.i_unidad_evaluable import IUnidadEvaluable
 
 
 class UnidadCurricular(IUnidadEvaluable):
@@ -30,21 +30,26 @@ class UnidadCurricular(IUnidadEvaluable):
     def validar_distribucion_de_horas_totales(self):
         calculo_horas_totales = self.horas_sincronicas + self.horas_asincronicas
         if calculo_horas_totales == self.horas_totales:
-            print(f"[Unidad curricular] La distribución válida.")
             return True
         
         else:
-            print(f"[Unidad curricular] La distribución no es válida.")
             return False
 
-    def visualizar_detalles_de_configuracion(self):
-        print(f"Unidad curricular: {self.nombre} ({self.codigo_de_unidad})")
-        print(f"Área(s) de conocimiento: {', '.join(self.area_de_conocimiento)}")
-        print(f"Tipo de componente: {self.tipo_de_componente.value}")
-        print(f"Horas totales: {self.horas_totales}") 
-        print(f"Horas semanales: {self.horas_semanales}")
-        print(f"Horas sincrónicas: {self.horas_sincronicas}") 
-        print(f"Horas asincrónicas: {self.horas_asincronicas}")
-        print(f"Criterio de aprobación (puntaje mínimo): {self.criterio_de_aprobacion}")
-        print(f"Porcentaje mínimo de asistencia: {self.porcentaje_minimo_asistencia}%")
-        print(f"Distribución de horas válida: {self.validar_distribucion_de_horas_totales()}")
+
+    def recuperar_informacion_de_unidad(self):
+        return {
+            "Código de unidad": self.codigo_de_unidad,
+            "Unidad curricular": self.nombre,
+            "Área(s) de conocimiento": self.area_de_conocimiento, # Lista
+            "Horas totales": self.horas_totales,
+            "Horas semanales": self.horas_semanales,
+            "Horas sincrónicas": self.horas_sincronicas,
+            "Horas asincrónicas": self.horas_asincronicas,
+            "Tipo de componente": self.tipo_de_componente.value, # Valor del Enum
+            "Criterio de aprobación": self.criterio_de_aprobacion,
+            "Porcentaje mínimo de asistencia": self.porcentaje_minimo_asistencia
+            }
+            
+        
+    def __str__(self):
+        return f"{self.nombre} ({self.codigo_de_unidad})"

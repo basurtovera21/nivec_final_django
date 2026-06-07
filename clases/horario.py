@@ -5,11 +5,12 @@ from clases.enums.dia_de_semana import DiaDeSemana
 from clases.enums.modalidad import Modalidad
 from clases.enums.tipo_de_sesion import TipoDeSesion
 
-#Usuario
-from clases.usuarios.docente import Docente
+#Interfaz
+from clases.interfaces.i_asignable_a_horario import IAsignableAHorario
+
 
 class Horario:
-    def __init__(self, dia_semana: DiaDeSemana, hora_inicio: time, hora_fin: time, espacio_de_imparticion: str, modalidad: Modalidad, numero_semana: int, tipo_de_sesion: TipoDeSesion, docente_responsable: Docente):
+    def __init__(self, dia_semana: DiaDeSemana, hora_inicio: time, hora_fin: time, espacio_de_imparticion: str, modalidad: Modalidad, numero_semana: int, tipo_de_sesion: TipoDeSesion, docente_responsable: IAsignableAHorario | None = None):
         self.dia_semana = dia_semana #Instancia
         self.hora_inicio = hora_inicio #datetime.time
         self.hora_fin = hora_fin #datetime.time
@@ -39,7 +40,7 @@ class Horario:
       return round(fin - inicio, 2) 
   
   
-    def verificar_conflicto_horario(self, otro_horario: 'Horario'):
+    def verificar_conflicto_horario(self, otro_horario):
         if self.dia_semana != otro_horario.dia_semana:
             return False
     

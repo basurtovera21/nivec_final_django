@@ -31,4 +31,4 @@ class CoordinadorUnidadAcademica(UsuarioAdministrativo, Docente):
         
     
     def iniciar_sesion(self):
-        print(f"[Coordinador UA] Sesión iniciada: {self.nombres} {self.apellidos} ({self.unidad_academica})")
+        return True

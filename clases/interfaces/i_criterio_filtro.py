@@ -1,3 +1,6 @@
+#CriterioCedulaFormato
+#CriterioConsistenteDeHoras
+#CriterioDePeriodoValido
 from abc import ABCMeta 
 from abc import abstractmethod
 

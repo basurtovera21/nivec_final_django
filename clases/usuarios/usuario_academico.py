@@ -23,13 +23,13 @@ class UsuarioAcademico(UsuarioDeSistema):
         
         
     def iniciar_sesion(self):
-        print(f"[Usuario académico] Sesión iniciada: {self.nombres} {self.apellidos}")
+        return True
         
         
     def obtener_registro_institucional(self):
         return {
-            "identificador_institucional": self.identificador_institucional,
-            "nombres": self.nombres,
-            "apellidos": self.apellidos,
-            "correo_institucional": self.correo_institucional,
+            "Identificador institucional": self.identificador_institucional,
+            "Nombres": self.nombres,
+            "Apellidos": self.apellidos,
+            "Correo institucional": self.correo_institucional,
         }

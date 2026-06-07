@@ -27,4 +27,4 @@ class UsuarioAdministrativo(UsuarioDeSistema):
    
         
     def iniciar_sesion(self): #Sobreescritura
-        print(f"[Usuario administrativo] Sesión iniciada: {self.nombres} {self.apellidos} ({self.perfil_administrativo.value})")
+        return True

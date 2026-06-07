@@ -35,12 +35,12 @@ class UsuarioDeSistema (metaclass = ABCMeta):
     @contrasena.setter
     def contrasena(self, nueva_contrasena):
         if len(nueva_contrasena) < self.minimo_de_caracteres_contrasena:
-            print(f"Contraseña no válida (mínimo {self.minimo_de_caracteres_contrasena} caracteres).")
+            raise ValueError(f"Contraseña no válida (mínimo {self.minimo_de_caracteres_contrasena} caracteres).")
+        
         elif len(nueva_contrasena) > self.maximo_de_caracteres_contrasena:
-            print(f"Contraseña no válida (máximo {self.maximo_de_caracteres_contrasena} caracteres).")
-        else:
-            self.__contrasena = nueva_contrasena
-            print("Registro válido, la contraseña ha sido cambiada.")
+            raise ValueError(f"Contraseña no válida (máximo {self.maximo_de_caracteres_contrasena} caracteres).")
+        
+        self.__contrasena = nueva_contrasena
             
             
     @abstractmethod

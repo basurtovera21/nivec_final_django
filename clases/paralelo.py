@@ -6,6 +6,8 @@ from clases.enums.modalidad import Modalidad
 from clases.usuarios.docente import Docente
 from clases.usuarios.estudiante import Estudiante
 
+from clases.horario import Horario
+
 
 class Paralelo:
     def __init__(self, codigo_de_paralelo: str, nombre: str, jornada: Jornada, modalidad: Modalidad, capacidad_maxima: int):
@@ -16,6 +18,7 @@ class Paralelo:
         self.capacidad_maxima = capacidad_maxima
         self._docente_responsable = None #Instancia Docente
         self._estudiantes_matriculados = [] #Lista de instancias Estudiante
+        self.horarios = []
         
 
     def tiene_cupo_disponible(self): #Retorna bool
@@ -29,30 +32,40 @@ class Paralelo:
             
     def vincular_estudiante(self, estudiante: Estudiante):
         if not self.tiene_cupo_disponible():
-            print(f"[Paralelo] No existen cupos disponibles: {self.nombre}")
-            return
+            return False
 
         if estudiante in self._estudiantes_matriculados:
-            print(f"[Paralelo] El estudiante ya ha sido registrado previamente: {estudiante.nombres} {estudiante.apellidos}")
-            return
+            return False
 
         self._estudiantes_matriculados.append(estudiante)
-        print(f"[Paralelo] El estudiante ha sido registrado: {estudiante.nombres} {estudiante.apellidos}")
+        return True
         
         
     def desvincular_estudiante(self, estudiante: Estudiante):
         if estudiante not in self._estudiantes_matriculados:
-            print(f"[Paralelo] El estudiante no ha sido encontrado: {estudiante.nombres} {estudiante.apellidos}")
-            return
+            return False
 
         self._estudiantes_matriculados.remove(estudiante)
-        print(f"[Paralelo] El estudiante ha sido removido: {estudiante.nombres} {estudiante.apellidos}")
+        return True
         
-        
+    
     def vincular_docente(self, docente: Docente):
         if self._docente_responsable is not None:
-            print(f"[Paralelo] El paralelo ya tiene un docente vinculado: {self._docente_responsable.nombres} {self._docente_responsable.apellidos}")
-            return
+            return False
 
         self._docente_responsable = docente
-        print(f"[Paralelo] El docente ha sido vinculado: {docente.nombres} {docente.apellidos}")
+        return True
+    
+    
+    def agregar_horario(self, horario: Horario):
+        self.horarios.append(horario)
+
+
+    def obtener_resumen_horario(self):
+        lista_de_resumenes_horarios = []
+        
+        for horario in self.horarios:
+            resumen_de_la_sesion = horario.obtener_resumen_de_sesion()
+            lista_de_resumenes_horarios.append(resumen_de_la_sesion)
+            
+        return lista_de_resumenes_horarios

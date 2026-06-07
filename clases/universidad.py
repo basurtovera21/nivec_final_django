@@ -9,9 +9,13 @@ class Universidad:
 
     def recuperar_informacion_institucional(self):
         return {
-            "nombre": self.nombre,
-            "abreviatura": self.abreviatura,
-            "codigo_sniese": self.codigo_sniese,
-            "direccion_matriz": self.direccion_matriz,
-            "identificador_visual": self.identificador_visual,
+            "Nombre": self.nombre,
+            "Abreviatura": self.abreviatura,
+            "Codigo SNIESE": self.codigo_sniese,
+            "Dirección de matriz": self.direccion_matriz,
+            "Identificador visual": self.identificador_visual,
         }
+        
+
+    def __str__(self):
+            return f"{self.nombre} ({self.abreviatura})"

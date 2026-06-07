@@ -3,7 +3,7 @@ from clases.enums.estado_de_malla import EstadoDeMalla
 from clases.enums.modalidad import Modalidad
 
 #Interfaz
-from clases.i_unidad_evaluable import IUnidadEvaluable
+from clases.interfaces.i_unidad_evaluable import IUnidadEvaluable
 
 
 class MallaCurricular:
@@ -20,37 +20,39 @@ class MallaCurricular:
         
 
     def agregar_unidad_curricular(self, *args): #Sobrecarga
+        
+        unidad_agregada = True
         for entrada in args:
             if isinstance(entrada, list):
                 #Lista como argumento único
                 for unidad in entrada:
-                    self._agregar_una_unidad_curricular(unidad)
+                    if not self._agregar_una_unidad_curricular(unidad):
+                        unidad_agregada = False
             else:
-                self._agregar_una_unidad_curricular(entrada)
-                
+                if not self._agregar_una_unidad_curricular(entrada):
+                    unidad_agregada = False
+        
+        return unidad_agregada
                 
     def _agregar_una_unidad_curricular(self, unidad_curricular: IUnidadEvaluable):
         if self._estado not in (EstadoDeMalla.DISENO, EstadoDeMalla.ACTIVA):
-            print(f"[Malla curricular] La malla curricular no puede ser modificada (estado actual '{self._estado.value}')")
-            return
+            return False
 
         if not isinstance(unidad_curricular, IUnidadEvaluable):
-            print("[Malla curricular] La entrada no es válida.")
-            return
+            return False
 
         for unidad in self._unidades_curriculares:
             if unidad.codigo_de_unidad == unidad_curricular.codigo_de_unidad:
-                print(f"[Malla curricular] La unidad ({unidad_curricular.codigo_de_unidad}) ya ha sido registrada.")
-                return
+                return False
 
         self._unidades_curriculares.append(unidad_curricular)
         self._total_horas_nivelacion = self.calcular_total_horas_nivelacion()
 
-        print(f"[Malla curricular] La unidad ha sido registrada: {unidad_curricular.nombre}")
+        return True
        
             
     def calcular_total_horas_nivelacion(self):
-        calculo_total_horas_nivelacion = 0
+        calculo_total_horas_nivelacion = 0.0
 
         for unidad in self._unidades_curriculares:
             calculo_total_horas_nivelacion += unidad.obtener_horas_totales()

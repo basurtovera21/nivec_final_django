@@ -19,26 +19,22 @@ class PeriodoDeNivelacion:
 
     def iniciar_periodo_de_nivelacion(self):
         #PLANIFICACION a EN_CURSO
-        if self._estado == EstadoDePeriodo.PLANIFICACION:
-            if date.today() >= self.fecha_inicio:
-                self._estado = EstadoDePeriodo.EN_CURSO
-                print(f"[Periodo de nivelación] El periodo ha sido iniciado: {self.periodo}")
-                
-            else:
-                print(f"[Periodo de nivelación] No se puede iniciar el periodo antes de la fecha establecida ({self.fecha_inicio})")
-                
-        else:
-            print(f"[Periodo de nivelación] No es posible iniciar el periodo (estado {self._estado.value})")
+        puede_iniciar = (self._estado == EstadoDePeriodo.PLANIFICACION and date.today() >= self.fecha_inicio)
+        
+        if puede_iniciar:
+            self._estado = EstadoDePeriodo.EN_CURSO
+            return True
+        return False
             
             
     def finalizar_periodo_de_nivelacion(self):
         #Estado a CERRADO
-        if self._estado in (EstadoDePeriodo.EN_CURSO, EstadoDePeriodo.EVALUACION):
+        puede_finalizar = self._estado in (EstadoDePeriodo.EN_CURSO, EstadoDePeriodo.EVALUACION)
+        
+        if puede_finalizar:
             self._estado = EstadoDePeriodo.CERRADO
-            print(f"[Periodo de nivelación] El periodo ha sido cerrado: {self.periodo}")
-            
-        else:
-            print(f"[Periodo de nivelación] No es posible cerrar el periodo (estado {self._estado.value})")
+            return True
+        return False
 
 
     def calcular_duracion_semanas(self):
@@ -57,3 +53,15 @@ class PeriodoDeNivelacion:
             "Duracion (en semanas)": self.calcular_duracion_semanas(),
             "Estado": self._estado.value,
         }
+        
+
+    def generar_matriz_de_horarios(self, paralelos: list):
+        #Resumen de todos los horarios del periodo.
+
+        matriz_horarios = {}
+
+        for paralelo in paralelos:
+            resumen_del_paralelo = paralelo.obtener_resumen_horario()
+            matriz_horarios[paralelo.nombre] = resumen_del_paralelo #Guardar el resumen en la matriz usando el nombre del paralelo
+
+        return matriz_horarios

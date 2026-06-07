@@ -1,6 +1,7 @@
 # Interfaz
 from interfaces.i_estrategia_de_evaluacion import IEstrategiaDeEvaluacion
 
+
 class EstrategiaDeEvaluacionEstandar(IEstrategiaDeEvaluacion):
     def __init__(self, porcentaje_horas: float, porcentaje_notas: float, porcentaje_aprobacion: float, porcentaje_evaluacion_estudiantil: float):
         self.porcentaje_horas = porcentaje_horas

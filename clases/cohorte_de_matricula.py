@@ -3,14 +3,18 @@ from datetime import date
 #Enums
 from clases.enums.estado_de_cohorte import EstadoDeCohorte
 from clases.enums.tipo_de_cohorte import TipoDeCohorte
+from clases.enums.registro_de_cupo import RegistroDeCupo
 
 from clases.periodo_de_nivelacion import PeriodoDeNivelacion
 from clases.usuarios.estudiante import Estudiante
+from clases.carrera import Carrera
 
 
 class CohorteDeMatricula:
-    def __init__(self, codigo_de_registro: str, fecha_de_cierre: date, periodo_de_nivelacion: PeriodoDeNivelacion, tipo_de_cohorte: TipoDeCohorte):
+    def __init__(self, codigo_de_registro: str, nombre_cohorte: str, carrera_registrada: Carrera, fecha_de_cierre: date, periodo_de_nivelacion: PeriodoDeNivelacion, tipo_de_cohorte: TipoDeCohorte):
         self.codigo_de_registro = codigo_de_registro
+        self.nombre_cohorte = nombre_cohorte
+        self.carrera_registrada = carrera_registrada
         self.fecha_de_cierre = fecha_de_cierre #Instancia datetime.date
         self.periodo_de_nivelacion = periodo_de_nivelacion #Instancia
         self.tipo_de_cohorte = tipo_de_cohorte   #Instancia TipoDeCohorte
@@ -23,23 +27,20 @@ class CohorteDeMatricula:
 
     def registrar_estudiante_matriculado(self, estudiante: Estudiante):
         if self._estado_de_cohorte != EstadoDeCohorte.ABIERTA:
-            print(f"[Cohorte de matrícula] La cohorte de matrícula ha sido cerrada previamente: {self.codigo_de_registro}")
-            return
+            return False
 
         if date.today() > self.fecha_de_cierre:
-            print(f"[Cohorte de matrícula] La fecha de cierre ha sido superada: {self.fecha_de_cierre}")
-            return
+            return False
 
         if estudiante in self._estudiantes_matriculados:
-            print(f"[Cohorte de matrícula] El estudiante ya ha sido registrado previamente: {estudiante.nombres} {estudiante.apellidos}")
-            return
+            return False
 
         self._estudiantes_matriculados.append(estudiante)
-        self._actualizar_contador(estudiante.registro_de_cupo)
-        print(f"[Cohorte de matrícula] El estudiante ha sido registrado: {estudiante.nombres} {estudiante.apellidos}")
+        self._actualizar_contador_de_registro(estudiante.registro_de_cupo)
+        return True
         
         
-    def _actualizar_contador(self, registro_de_cupo: RegistroDeCupo):
+    def _actualizar_contador_de_registro(self, registro_de_cupo: RegistroDeCupo):
         if registro_de_cupo == RegistroDeCupo.REGULAR:
             self._total_primera_matricula += 1
 
@@ -50,5 +51,14 @@ class CohorteDeMatricula:
             self._total_exonerados += 1    
             
             
-    def calcular_total_matriculados(self): #Retorna int
+    def calcular_total_matriculados(self):
         return (self._total_primera_matricula + self._total_segunda_matricula + self._total_exonerados)
+    
+    
+    def obtener_estadisticas_de_registro(self):
+        return {
+            "Total primera matricula": self._total_primera_matricula,
+            "Total segunda matricula": self._total_segunda_matricula,
+            "Total exonerados": self._total_exonerados,
+            "Estudiantes matriculados": self.calcular_total_matriculados()
+        }
